@@ -1,5 +1,5 @@
 body {
-  background-color: rgba(199, 216, 165, 0.31); }
+  background-color: #f4ffe5; }
 
 pre {
   font-size: 0.8em;
@@ -32,7 +32,7 @@ header {
   overflow-x: hidden;
   border-right: 1px solid black; }
   #menu .pure-menu {
-    background-color: rgba(199, 216, 165, 0.31); }
+    background-color: #f4ffe5; }
     #menu .pure-menu ul li a:hover {
       background-color: #7b8284;
       color: #71b1a2; }
