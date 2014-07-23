@@ -1,0 +1,20 @@
+doctype html
+block vars
+html
+    head
+        meta(http-equiv='Content-Type', content='text/html', charset='utf-8')
+        link(rel="stylesheet", href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css")
+        link(rel="stylesheet", href="css/trackr.css")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        if(title)
+            title= title
+        else
+            title trackr API documentation
+
+    body
+        div#menu
+            include menu
+        div#content
+            header
+                h1 API Documentation
+            block content

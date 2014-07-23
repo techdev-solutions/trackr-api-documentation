@@ -1,0 +1,8 @@
+# IDEA
+.idea/
+*.iml
+*.ipr
+atlassian-ide-plugin.xml
+
+# OSX
+.DS_Store

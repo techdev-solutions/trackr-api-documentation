@@ -1,0 +1,13 @@
+#menu {
+  position: absolute;
+  width: 330px;
+  top: 0;
+  bottom: 0;
+  overflow: scroll;
+  border-right: 1px solid black; }
+  #menu header h1 {
+    margin-left: 110px; }
+
+#content {
+  position: absolute;
+  left: 331px; }
