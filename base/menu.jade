@@ -1,5 +1,5 @@
 header
-    h1 trackr
+    div trackr
 
 .pure-menu.pure-menu-open
     a(href="getting_started.html").pure-menu-heading Getting started
@@ -8,3 +8,9 @@ header
             a(href="starting_server.html") Starting the application
         li(class=page === 'security' ? 'pure-menu-selected' : undefined)
             a(href="security.html") Accessing the application
+    a(href="api/api_overview.html").pure-menu-heading API documentation
+    ul
+        li(class=page === 'api_1' ? 'pure-menu-selected' : undefined)
+            a(href="todo_1.html") Todo 1
+        li(class=page === 'api_2' ? 'pure-menu-selected' : undefined)
+            a(href="todo_2.html") Todo 2

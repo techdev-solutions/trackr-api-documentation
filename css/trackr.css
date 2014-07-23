@@ -1,13 +1,42 @@
+body {
+  background-color: rgba(199, 216, 165, 0.31); }
+
+pre {
+  font-size: 0.8em;
+  background-color: white;
+  padding: 10px;
+  border-radius: 6px; }
+
+h1 {
+  margin: 1.2em 0; }
+
+h2 {
+  margin: 1em 0; }
+
+header {
+  background-color: #496b6a;
+  width: 100%;
+  height: 100px; }
+  header div {
+    font-family: "Lobster";
+    font-size: 3em;
+    padding: 25px 0 0 110px; }
+
 #menu {
-  position: absolute;
+  position: fixed;
+  float: left;
   width: 330px;
   top: 0;
   bottom: 0;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   border-right: 1px solid black; }
-  #menu header h1 {
-    margin-left: 110px; }
+  #menu .pure-menu {
+    background-color: rgba(199, 216, 165, 0.31); }
+    #menu .pure-menu ul li a:hover {
+      background-color: #7b8284;
+      color: #71b1a2; }
 
 #content {
-  position: absolute;
-  left: 331px; }
+  margin-left: 331px;
+  min-height: 100%; }

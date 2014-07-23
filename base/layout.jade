@@ -3,8 +3,12 @@ block vars
 html
     head
         meta(http-equiv='Content-Type', content='text/html', charset='utf-8')
+
         link(rel="stylesheet", href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css")
+        link(rel="stylesheet", href="http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css")
         link(rel="stylesheet", href="css/trackr.css")
+
+        link(href='http://fonts.googleapis.com/css?family=Lobster', rel='stylesheet', type='text/css')
         meta(name="viewport", content="width=device-width, initial-scale=1")
         if(title)
             title= title
@@ -16,5 +20,9 @@ html
             include menu
         div#content
             header
-                h1 API Documentation
-            block content
+                div API Documentation
+            .pure-g
+                .pure-u-1.pure-u-lg-1-24
+                .pure-u-1.pure-u-lg-11-12
+                    block content
+                .pure-u-1.pure-u-lg-1-24

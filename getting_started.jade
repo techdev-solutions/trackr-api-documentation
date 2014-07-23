@@ -2,4 +2,14 @@ extends base/layout
 block vars
     - var page = 'getting_started'
 block content
-    h2 Getting started
+    h1 Getting started
+    h2 Prerequisites
+    p To compile and use trackr you need Java 8 installed.
+    p To get started with trackr first clone the git repository.
+    pre.
+        git clone https://github.com/techdev-solutions/trackr-backend
+        cd trackr-backend
+    p Now if you have gradle installed you can execute it directly
+    pre.
+        gradle build
+    p Otherwise, trackr comes with the gradle wrapper script that will download a local gradle distribution so you don't have to install it.

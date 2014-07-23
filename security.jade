@@ -2,4 +2,87 @@ extends base/layout
 block vars
     - var page = 'security'
 block content
-    h2 Security
+    h1 Security - how to access the API when it is running
+    p There are several ways to do this.
+
+    h2 Get an access token via the predefined client
+    p Trackr uses OAuth so you need an access token to access the API.
+    p Two possibilities to get an access token. Choose one and continue below.
+    ol
+        li Use the admin account. This feature might be removed in future releases.
+        li You need a valid account in the database an use Google Open ID login. If you have the dev profile active, edit the file src/main/resources/import.sql. Choose a credential INSERT (not the admin one, though) and change the mail address to your gmail address.
+            pre.
+                INSERT INTO credential (id, email, enabled, locale) VALUES (1, 'your.address@gmail.com', true, 'de');
+            p If you use the qs or prod profile you need to insert the employee + credential in the database you configured.
+    p If you have chosen your option, start the server and access
+    pre.
+        http://localhost:8080/oauth/authorize?client_id=trackr-page&response_type=token&redirect_uri=http://localhost
+    p You will be redirected to http://localhost:8080/login. If your option was 1) then replace /login with /admin and hit enter. Login with admin@techdev.de/techdev. If your option was 2) click "Login mit Google" and choose the account you added in 2).
+    p Either way you should see the authorize page. Press submit and you should be redirected to
+    pre.
+        http://localhost/#access_token=SOME_TOKEN&token_type=bearer&expires_in=43199&scope=read%20write
+    p Copy the SOME_TOKEN value, it's your access token. Now you should be able to access the API like this
+    pre.
+        curl localhost:8080/api/ -H "Authorization: Bearer SOME_TOKEN"
+
+    h2 Disable security alltogether
+    p <b>Note</b> Some methods of the API don't work without security as they rely on a principal object. They will just throw a NullPointerException when you disable security. If your just interested in the Spring Data REST API, most of it should work.
+        ol
+            li
+                | Edit the file de/techdev/trackr/core/SecurityWebApplicationInitializer.java
+                | Comment out the extends and the constructor.
+                pre.
+                    public class SecurityWebApplicationInitializer /*extends AbstractSecurityWebApplicationInitializer*/ {
+                        public SecurityWebApplicationInitializer() {
+                            //super(SecurityConfiguration.class, JpaConfiguration.class, MethodSecurityConfiguration.class);
+                        }
+                    }
+                | This prohibits the Spring Security filter chain to be initalized
+            li Edit the file de/techdev/trackr/core/ApiWebApplicationInitializer.java
+                | Remove the MethodSecurityConfiguration.class from getServletConfigClasses()
+                | Add JpaConfiguration.class to getRootConfigClasses()
+                pre.
+                    public class ApiWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+                        @Override
+                        protected Class<?>[] getRootConfigClasses() {
+                            return new Class<?>[] {JpaConfiguration.class};
+                        }
+                            @Override
+                        protected Class<?>[] getServletConfigClasses() {
+                            return new Class<?>[] {ApiWebMvcConfiguration.class, /*MethodSecurityConfiguration.class,*/ MailConfiguration.class, ScheduledJobsConfiguration.class};
+                        }
+                        //...
+                    }
+                | The MethodSecurityConfiguration has an @Autowired bean that's not present and the JpaConfiguration needs to be loaded since we disabled it with the SecurityWebApplicationInitializer.
+    p Now, when you start the application you should be able to curl the API:
+    pre.
+        curl localhost:8080/api/
+
+    h2 Get an access token with an additional client (advanced)
+    p <b>Note:</b> Like disabling security, some methods might not work with this approach since you won't have a correct principal.
+    p The predefined client needs a browser to work and everytime you restart (at least in dev profile) you have to click through all pages again. A client with the client_credentials grant makes this a little easier.
+    p Edit the file de/techdev/trackr/core/security/OAuth2ServerConfiguration.java and change this method:
+    pre.
+        @Override
+        public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+            clients.inMemory().withClient("trackr-page")
+                .resourceIds(TRACKR_RESOURCE_ID)
+                .authorizedGrantTypes("authorization_code", "implicit")
+                .authorities("ROLE_CLIENT")
+                .scopes("read", "write")
+                .redirectUris(trackrPageRedirectUris.split(","))
+                .and().withClient("example")
+                    .resourceIds(TRACKR_RESOURCE_ID)
+                    .authorizedGrantTypes("client_credentials")
+                    .authorities("ROLE_ADMIN")
+                    .scopes("read", "write")
+                    .secret("example");
+        }
+
+    p The lines after withClient("example") are new.
+    p Now you have an OAuth client with the client_credentials grant and can get an access token like this:
+    pre.
+        curl -u example:example localhost:8080/oauth/token\?grant_type=client_credentials
+    p With that token you can access the API like this
+    pre.
+        curl localhost:8080/api/ -H "Authorization: Bearer SOME_TOKEN"

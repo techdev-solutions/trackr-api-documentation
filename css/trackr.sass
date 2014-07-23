@@ -1,22 +1,54 @@
 $menuWidth: 330px
 $techdevGreenDark: rgb(73, 107, 106)
 $techdevGreenLight: rgb(199, 216, 165)
+$techdevGreenLightBackground: rgba(199, 216, 165, 0.31)
 $techdevTurquoise: rgb(113, 177, 162)
 $techdevGrey: rgb(123, 130, 132)
 
+body
+  background-color: $techdevGreenLightBackground
+
+pre
+  font-size: 0.8em
+  background-color: white
+  padding: 10px
+  border-radius: 6px
+
+h1
+  margin: 1.2em 0
+
+h2
+  margin: 1.0em 0
+
+header
+  $headerHeight: 100px
+  background-color: $techdevGreenDark
+  width: 100%
+  height: $headerHeight
+  div
+    font-family: 'Lobster'
+    font-size: 3em
+    padding: $headerHeight / 4 0 0 110px
+
 #menu
-  position: absolute
+  position: fixed
+  float: left
   width: $menuWidth
+  // needed so the menu always goes to the bottom
   top: 0
   bottom: 0
-  overflow: scroll
+  overflow-y: scroll
+  overflow-x: hidden
   border-right: 1px solid black
-  header
-    h1
-      margin-left: 110px
+  .pure-menu
+    background-color: $techdevGreenLightBackground
+    ul
+      li
+        a:hover
+          background-color: $techdevGrey
+          color: $techdevTurquoise
 
 #content
-  position: absolute
-  left: $menuWidth + 1
-
+  margin-left: $menuWidth + 1
+  min-height: 100%
 
