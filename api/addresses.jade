@@ -3,3 +3,110 @@ block vars
     - var page = 'api/addresses'
 block content
     h1 /addresses
+    p Addresses for companies.
+        .pure-g
+            .pure-u-1.pure-u-lg-2-5
+                h2#endpoints Endpoints
+                table.pure-table.pure-table-bordered
+                    thead
+                        tr
+                            th Method
+                            th Path
+                    tbody
+                        tr
+                            td GET
+                            td
+                                a(href="#get_one") /{id}
+                        tr
+                            td POST
+                            td
+                                a(href="#post") /
+                        tr
+                            td PUT
+                            td
+                                a(href="#put") /{id}
+                        tr
+                            td DELETE
+                            td
+                                a(href="#delete") /{id}
+            .pure-u-1.pure-u-lg-3-5
+                h2 Structure
+                table.pure-table.pure-table-bordered
+                    thead
+                        tr
+                            th Fieldname
+                            th Fieldtype
+                            th Validations
+                    tbody
+                        tr
+                            td id
+                            td Long
+                            td
+                        tr
+                            td version
+                            td Integer
+                            td
+                        tr
+                            td street
+                            td String
+                            td not empty
+                        tr
+                            td houseNumber
+                            td String
+                            td not empty
+                        tr
+                            td zipCode
+                            td String
+                            td not empty
+                        tr
+                            td city
+                            td String
+                            td not empty
+                        tr
+                            td country
+                            td String
+                            td not empty
+
+    h2#get_one GET /{id}
+        a.back-to-top(href="#endpoints") &#9650;
+    p Get a single address time by its id.
+    h4 Returns
+    p One address
+
+    hr
+
+    h2#post POST /
+        a.back-to-top(href="#endpoints") &#9650;
+    p Create a new address. Returns the created object.
+        .pure-g
+            .pure-u-1.pure-u-md-1-2
+                h4 Security
+                p ROLE_ADMIN
+            .pure-u-1.pure-u-md-1-2
+                h4 Returns
+                p A single company.
+
+    hr
+
+    h2#put PUT /{id}
+        a.back-to-top(href="#endpoints") &#9650;
+    p Update the company identified by id. Returns the updated object.
+        .pure-g
+            .pure-u-1.pure-u-md-1-2
+                h4 Security
+                p ROLE_ADMIN
+            .pure-u-1.pure-u-md-1-2
+                h4 Returns
+                p A single company
+            hr
+
+    h2#delete DELETE /{id}
+        a.back-to-top(href="#endpoints") &#9650;
+    p Delete a the company identified by id.
+        .pure-g
+            .pure-u-1.pure-u-md-1-2
+                h4 Security
+                p ROLE_ADMIN
+            .pure-u-1.pure-u-md-1-2
+                h4 Returns
+                p Nothing.
