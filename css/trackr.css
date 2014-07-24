@@ -25,7 +25,7 @@ header {
 #menu {
   position: fixed;
   float: left;
-  width: 330px;
+  width: 280px;
   top: 0;
   bottom: 0;
   overflow-y: scroll;
@@ -38,7 +38,7 @@ header {
       color: #71b1a2; }
 
 #content {
-  margin-left: 331px;
+  margin-left: 281px;
   min-height: 100%; }
   @media screen and (max-width: 900px) {
     #content header {
