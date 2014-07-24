@@ -91,7 +91,7 @@ block content
                         each parameter in endpoint.parameters
                             tr
                                 td= parameter.name
-                                td= parameter.type
+                                td!= parameter.type
                                 td= parameter.required
                                 td= parameter.description
             if(endpoint.parameters && typeof(endpoint.parameters) === 'string')

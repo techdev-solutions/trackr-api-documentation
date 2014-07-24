@@ -770,8 +770,88 @@ var federalStates = {
         }
     ]
 };
-
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates];
+var holidays = {
+    page: 'api/holidays',
+    endpointPath: 'holidays',
+    description: 'Public holidays that are different for each state.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get all holidays.',
+            returns: 'A list of holidays.'
+        },
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single holiday by its id.',
+            returns: 'One holiday.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByFederalStateAndDayBetween',
+            description: 'Find holidays for a federal state between two dates.',
+            returns: 'A list of holidays.',
+            parameters: [
+                {
+                    name: 'federalState',
+                    type: '<a href="federalStates.html">federal state</a>',
+                    required: true,
+                    description: 'The federal state to search for.'
+                },
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new holiday. Returns the created object.',
+            returns: 'A single holiday.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the holiday identified by id. Returns the updated object.',
+            returns: 'A single holiday.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete a the holiday identified by id.',
+            returns: 'Nothing'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'day',
+            type: 'Date'
+        },
+        {
+            name: 'name',
+            type: 'String'
+        },
+        {
+            name: 'federalState',
+            type: '<a href="federalStates.html">federal state</a>'
+        }
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
