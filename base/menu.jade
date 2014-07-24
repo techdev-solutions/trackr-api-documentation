@@ -13,6 +13,10 @@ if(page && page.indexOf('api') === 0)
             a(href=path + "starting_server.html") Starting the application
         li(class=page === 'security' ? 'pure-menu-selected' : undefined)
             a(href=path + "security.html") Accessing the application
+    a.pure-menu-heading Application internals
+    ul
+        li(class=page === 'scheduled_jobs' ? 'pure-menu-selected' : undefined)
+            a(href=path + "scheduled_jobs.html") Scheduled jobs
     a(href=path + "api/api_overview.html").pure-menu-heading API documentation
 
     - var api = ['address_book', 'addresses', 'authorities', 'billable_times', 'companies', 'contact_persons', 'credentials', 'employees', 'federal_states', 'holidays', 'invoices', 'principal', 'projects', 'sick_days', 'translations', 'travel_expense_reports', 'travel_expenses', 'vacation_requests', 'work_times']
