@@ -49,7 +49,7 @@ var addresses = {
         {
             method: 'GET',
             path: '/{id}',
-            description: 'Get a single address time by its id.',
+            description: 'Get a single address by its id.',
             returns: 'One address.'
         },
         {
@@ -146,9 +146,9 @@ var authorities = {
     ]
 };
 var billableTimes = {
-    page: 'api/billable_times',
+    page: 'api/billableTimes',
     description: 'A billable time is an amount of minutes belonging to an employee and a project that is put on the bill for this project. Billable times are typically created from the <a href="../api/work_times.html">work times</a> an employee has entered for that day.',
-    endpointPath: 'billable_times',
+    endpointPath: 'billableTimes',
     endpoints: [
         {
             method: 'GET',
@@ -294,9 +294,9 @@ var billableTimes = {
     ]
 };
 var contactPersons = {
-    page: 'api/contact_persons',
+    page: 'api/contactPersons',
     description: 'Contact persons belong to a company.',
-    endpointPath: 'contact_persons',
+    endpointPath: 'contactPersons',
     endpoints: [
         {
             method: 'GET',
@@ -375,99 +375,6 @@ var contactPersons = {
             name: 'company',
             type: 'companies',
             security: 'deletable, updateable by ROLE_SUPERVISOR'
-        }
-    ]
-};
-var credentials = {
-    page: 'api/credentials',
-    description: 'Credential is the login data belonging to an employee. Credentials have the same id as the belonging employee.',
-    endpointPath: 'credentials',
-    endpoints: [
-        {
-            method: 'GET',
-            path: '/',
-            description: 'Get all credentials.',
-            returns: 'A page of credentials.',
-            pageable: true
-        },
-        {
-            method: 'GET',
-            path: '/{id}',
-            description: 'Get a single credential by its id.',
-            returns: 'One credential.'
-        },
-        {
-            method: 'GET',
-            path: '/search/findByEmail',
-            description: 'Find credentials by an email address.',
-            returns: 'A list of credentials.',
-            parameters: [
-                {
-                    name: 'email',
-                    type: 'String',
-                    required: true,
-                    description: 'The email to search for.'
-                }
-            ]
-        },
-        {
-            method: 'POST',
-            path: '/',
-            description: 'Create a new credential. Returns the created object.',
-            returns: 'A single credential.',
-            security: 'ROLE_ADMIN'
-        },
-        {
-            method: 'PUT',
-            path: '/{id}',
-            description: 'Update the credential identified by id. Returns the updated object.',
-            returns: 'A credential.',
-            security: 'ROLE_ADMIN'
-        },
-        {
-            method: 'DELETE',
-            path: '/{id}',
-            description: 'Delete the credential identified by id.',
-            returns: 'Nothing',
-            security: 'ROLE_ADMIN'
-        }
-    ],
-    projections: [
-        {
-            name: 'allRolesOverview',
-            description: 'Contains all authorities.'
-        }
-    ],
-    structure: [
-        {
-            name: 'id',
-            type: 'Long'
-        },
-        {
-            name: 'email',
-            type: 'String',
-            validations: 'valid email address, unique'
-        },
-        {
-            name: 'enabled',
-            type: 'boolean'
-        },
-        {
-            name: 'locale',
-            type: 'String',
-            validations: 'not empty'
-        }
-    ],
-    links: [
-        {
-            name: 'employee',
-            type: 'employees',
-            security: 'deletable, updateable by ROLE_ADMIN'
-        },
-        {
-            name: 'authorities',
-            type: 'authorities',
-            security: 'deletable, updateable by ROLE_ADMIN'
         }
     ]
 };
@@ -574,7 +481,6 @@ var companies = {
         }
 
     ],
-
     links: [
         {
             type: 'addresses',
@@ -582,7 +488,7 @@ var companies = {
             security: 'deletable, updateable by ROLE_SUPERVISOR'
         },
         {
-            type: 'contact_persons',
+            type: 'contactPersons',
             name: 'contactPersons',
             security: 'deletable, updateable by ROLE_SUPERVISOR'
         },
@@ -593,8 +499,256 @@ var companies = {
         }
     ]
 };
+var credentials = {
+    page: 'api/credentials',
+    description: 'Credential is the login data belonging to an employee. Credentials have the same id as the belonging employee.',
+    endpointPath: 'credentials',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get all credentials.',
+            returns: 'A page of credentials.',
+            pageable: true
+        },
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single credential by its id.',
+            returns: 'One credential.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByEmail',
+            description: 'Find credentials by an email address.',
+            returns: 'A list of credentials.',
+            parameters: [
+                {
+                    name: 'email',
+                    type: 'String',
+                    required: true,
+                    description: 'The email to search for.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new credential. Returns the created object.',
+            returns: 'A single credential.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the credential identified by id. Returns the updated object.',
+            returns: 'A credential.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete the credential identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN'
+        }
+    ],
+    projections: [
+        {
+            name: 'allRolesOverview',
+            description: 'Contains all authorities.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'email',
+            type: 'String',
+            validations: 'valid email address, unique'
+        },
+        {
+            name: 'enabled',
+            type: 'boolean'
+        },
+        {
+            name: 'locale',
+            type: 'String',
+            validations: 'not empty'
+        }
+    ],
+    links: [
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'deletable, updateable by ROLE_ADMIN'
+        },
+        {
+            name: 'authorities',
+            type: 'authorities',
+            security: 'deletable, updateable by ROLE_ADMIN'
+        }
+    ]
+};
+var employees = {
+    page: 'api/employees',
+    endpointPath: 'employees',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Find all employees.',
+            returns: 'A page of employees.',
+            security: 'ROLE_SUPERVISOR',
+            pageable: true
+        },
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single employee by her/his id.',
+            returns: 'A single employee.',
+            security: 'ROLE_SUPERVISOR'
+        },
+        {
+            method: 'GET',
+            path: '/{id}/self',
+            description: 'An accessor for employees to get their own object reduced to a few fields.',
+            returns: 'A reduced employee, only the fields firstName, lastName and phoneNumber are present.',
+            security: 'Only the employee her/himself.'
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new employee. Returns the created object.',
+            security: 'ROLE_ADMIN',
+            returns: 'A single employee.'
+        },
+        {
+            method: 'POST',
+            path: '/createWithCredential',
+            description: 'Create a new employee together with his/her credential',
+            security: 'ROLE_ADMIN',
+            returns: 'A single employee',
+            parameters: 'Expects an object containing a valid <a href="employees.html">employee</a> and <a href="credentials.html">credential</a>.<pre>{\n\t"employee": { "firstName": ...},\n\t"credential": { "email": ...}\n}</pre>'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update an existing employee. If the leaveDate is in the past after the update the <a href="credentials.html">credential</a> belonging to the employee will automatically be deactivated.',
+            security: 'ROLE_SUPERVISOR',
+            returns: 'A single employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/self',
+            description: 'An employee can update a restricted set of fields on his own employee entity with this method.',
+            security: 'Only the employee her/himself.',
+            returns: 'A single reduced employee',
+            parameters: 'The request body must be a reduced employee (can be partial):<pre>{ "firstName": ..., "lastName": ..., "phoneNumber": ...}</pre>'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete the employee identified by id.',
+            security: 'ROLE_ADMIN',
+            returns: 'Nothing.'
+        }
+    ],
+    projections: [
+        {
+            name: 'withCredential',
+            description: 'Has the credentials embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'firstName',
+            type: 'String',
+            validations: 'not empty'
+        },
+        {
+            name: 'lastName',
+            type: 'String',
+            validations: 'not empty'
+        },
+        {
+            name: 'phoneNumber',
+            type: 'String'
+        },
+        {
+            name: 'title',
+            type: 'String'
+        },
+        {
+            name: 'salary',
+            type: 'Number'
+        },
+        {
+            name: 'hourlyCostRate',
+            type: 'Number'
+        },
+        {
+            name: 'joinDate',
+            type: 'Date'
+        },
+        {
+            name: 'leaveDate',
+            type: 'Date'
+        },
+        {
+            name: 'federalState',
+            type: '<a href="federal_states.html">federal state</a>'
+        },
+        {
+            name: 'vacationEntitlement',
+            type: 'Number'
+        }
+    ],
+    links: [
+        {
+            name: 'credential',
+            type: 'credentials',
+            security: 'no update or delete'
+        },
+        {
+            name: 'workTimes',
+            type: 'workTimes',
+            security: 'no update or delete'
+        },
+        {
+            name: 'billableTimes',
+            type: 'billableTimes',
+            security: 'no update or delete'
+        },
+        {
+            name: 'vacationRequests',
+            type: 'vacationRequests',
+            security: 'no update or delete'
+        },
+        {
+            name: 'approvedRequests',
+            type: 'approvedRequests',
+            security: 'no update or delete'
+        },
+        {
+            name: 'travelExpenseReports',
+            type: 'travelExpenseReports',
+            security: 'no update or delete'
+        }
+    ]
+};
 
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials];
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];

@@ -41,7 +41,7 @@ block content
                     each field in structure
                         tr
                             td= field.name
-                            td= field.type
+                            td!= field.type
                             td= field.validations
                     if(links)
                         tr

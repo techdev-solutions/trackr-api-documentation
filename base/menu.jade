@@ -19,7 +19,7 @@ if(page && page.indexOf('api/') === 0)
             a(href=path + "scheduled_jobs.html") Scheduled jobs
     a(href=path + "api_overview.html").pure-menu-heading API documentation
 
-    - var api = ['address_book', 'addresses', 'authorities', 'billable_times', 'companies', 'contact_persons', 'credentials', 'employees', 'federal_states', 'holidays', 'invoices', 'principal', 'projects', 'sick_days', 'translations', 'travel_expense_reports', 'travel_expenses', 'vacation_requests', 'work_times']
+    - var api = ['address_book', 'addresses', 'authorities', 'billableTimes', 'companies', 'contactPersons', 'credentials', 'employees', 'federalStates', 'holidays', 'invoices', 'principal', 'projects', 'sickDays', 'translations', 'travelExpenseReports', 'travelExpenses', 'vacationRequests', 'workTimes']
     ul
         each apiPage in api
             li(class=page === 'api/' + apiPage ? 'pure-menu-selected' : undefined)
