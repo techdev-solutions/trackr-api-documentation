@@ -7,7 +7,7 @@ block content
         | from the <a href="../api/work_times.html">work times</a> an employee has entered for that day.
     .pure-g
         .pure-u-1.pure-u-lg-2-3
-            h2 Endpoints
+            h2#endpoints Endpoints
             table.pure-table.pure-table-bordered
                 thead
                     tr
@@ -92,6 +92,7 @@ block content
 
 
     h2#get_one GET /{id}
+        a.back-to-top(href="#endpoints") &#9650;
     p Get a single billable time by its id.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -104,6 +105,7 @@ block content
     hr
 
     h2#findByProjectAndDateBetweenOrderByDateAsc GET /search/findByProjectAndDateBetweenOrderByDateAsc
+        a.back-to-top(href="#endpoints") &#9650;
     p Find work times by ther project and the date between two given dates.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -140,6 +142,7 @@ block content
     hr
 
     h2#findByDateBetween GET /search/findByDateBetween
+        a.back-to-top(href="#endpoints") &#9650;
     p Find all billable times between two dates.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -171,6 +174,7 @@ block content
     hr
 
     h2#findEmployeeMappingByProjectAndDateBetween GET /findEmployeeMappingByProjectAndDateBetween
+        a.back-to-top(href="#endpoints") &#9650;
     p Get all billable minutes for one project and employee in an interval summed up.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -208,6 +212,7 @@ block content
     hr
 
     h2#post POST /
+        a.back-to-top(href="#endpoints") &#9650;
     p Create a new billable time. Returns the created object.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -220,6 +225,7 @@ block content
     hr
 
     h2#put PUT /{id}
+        a.back-to-top(href="#endpoints") &#9650;
     p Update the billable time identified by id. Returns the updated object.
     .pure-g
         .pure-u-1.pure-u-md-1-2
@@ -232,6 +238,7 @@ block content
     hr
 
     h2#delete DELETE /{id}
+        a.back-to-top(href="#endpoints") &#9650;
     p Delete a the billable time identified by id.
     .pure-g
         .pure-u-1.pure-u-md-1-2

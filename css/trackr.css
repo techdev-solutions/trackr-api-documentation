@@ -43,3 +43,8 @@ header {
   @media screen and (max-width: 900px) {
     #content header {
       font-size: 10px; } }
+
+.back-to-top {
+  text-decoration: none;
+  color: #71b1a2;
+  float: right; }
