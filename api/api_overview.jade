@@ -11,6 +11,42 @@ block content
         | are the addresses of companies. You can't access an address by its own, only through the company. The page exists to describe
         | how an address is structured.
 
+    h2 Date format
+    p Dates can be in the format of a timestamp, 'yyyy-MM-dd' or 'yyyy-MM-dd HH:mm:ss'.
+
+    h2#links Links
+    p Some entities have links to other entities. You always find the links in the "_links" property. A link always has a field "href" that can be used to access the linked
+        | resource.
+    pre.
+        employee = {
+            ...,
+            "_links": {
+                "credential": {
+                    "href": "http://localhost:8080/api/employee/1/credential"
+                }
+            }
+        }
+    p If you want to change the link on an entity please read the <a href="http://docs.spring.io/spring-data/rest/docs/2.1.1.RELEASE/reference/html/repository-resources.html#repository-resources.association-resource">
+        | Spring Data REST documentation</a>. Basically, you can PUT, POST and DELETE on links. PUT and POST need the content type text/uri-list and you send the href of the other resource as the request body.
+
+    h2#projections Projections
+    p Sometimes it is cumbersome to fetch linked resources via <a href="#links">links</a>. For these cases there are projections defined that embed a linked resource into the
+        | response.
+    pre.
+        % > curl localhost:8080/api/billableTimes/1?projection=withProject
+        {
+            ...,
+            "project": {
+                "id": 12,
+                "identifier": ...
+            }
+        }
+
+    h2 PUT vs PATCH
+    p All entities that are updateable via PUT are also updateable via PATCH. With PATCH you can just send the fields you want to edit.
+    pre.
+        % > curl -X PATCH -d "{\"firstName\": \"John\"}" -H "Content-Type: application/json" localhost:8080/api/employees/1
+
     h2 Discoverability
     p.
         Most of the API is discoverable. What does that mean? A response contains not only the data but also possible links that you can follow.

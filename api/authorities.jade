@@ -6,11 +6,20 @@ block content
     .pure-g
     .pure-u-1.pure-u-lg-1-2
         h2 Endpoints
-        ul
-            li
-                a(href="#get_root") GET /
-            li
-                a(href="#get_one") GET /{id}
+        table.pure-table.pure-table-bordered
+            thead
+                tr
+                    th Method
+                    th Path
+            tbody
+                tr
+                    td GET
+                    td
+                        a(href="#get_root") /
+                tr
+                    td GET
+                    td
+                        a(href="#get_one") /{id}
     .pure-u-1.pure-u-lg-1-2
         h2 Structure
         table.pure-table.pure-table-bordered

@@ -3,3 +3,240 @@ block vars
     - var page = 'api/billable_times'
 block content
     h1 /billable_times
+    p A billable time is an amount of minutes belonging to an employee and a project that is put on the bill for this project. Billable times are typically created
+        | from the <a href="../api/work_times.html">work times</a> an employee has entered for that day.
+    .pure-g
+        .pure-u-1.pure-u-lg-2-3
+            h2 Endpoints
+            table.pure-table.pure-table-bordered
+                thead
+                    tr
+                        th Method
+                        th Path
+                tbody
+                    tr
+                        td GET
+                        td
+                            a(href="#get_one") /{id}
+                    tr
+                        td GET
+                        td
+                            a(href="#findByProjectAndDateBetweenOrderByDateAsc") /search/findByProjectAndDateBetweenOrderByDateAsc
+                    tr
+                        td GET
+                        td
+                            a(href="#findByDateBetween") /search/findByDateBetween
+                    tr
+                        td GET
+                        td
+                            a(href="#findEmployeeMappingByProjectAndDateBetween") /findEmployeeMappingByProjectAndDateBetween
+                    tr
+                        td POST
+                        td
+                            a(href="#post") /
+                    tr
+                        td PUT
+                        td
+                            a(href="#put") /{id}
+                    tr
+                        td DELETE
+                        td
+                            a(href="#delete") /{id}
+            h2 Projections
+            table.pure-table
+                thead
+                    tr
+                        th Name
+                        th Description
+                tbody
+                    tr
+                        td withProject
+                        td Contains the project embedded
+        .pure-u-1.pure-u-lg-1-3
+            h2 Structure
+            table.pure-table.pure-table-bordered
+                thead
+                    tr
+                        th Fieldname
+                        th Fieldtype
+                        th Validations
+                tbody
+                    tr
+                        td id
+                        td Long
+                        td
+                    tr
+                        td version
+                        td Integer
+                        td
+                    tr
+                        td date
+                        td Date
+                        td not null
+                    tr
+                        td minutes
+                        td Integer
+                        td not null, > 0
+                    tr
+                        td(colspan=3) <a href="api_overview.html#links">Links</a>
+                    tr
+                        td
+                            a(href="../api/employees.html") employee
+                        td Link
+                        td not deletable, updateable by ROLE_SUPERVISOR
+                    tr
+                        td
+                            a(href="../api/projects.html") project
+                        td Link
+                        td not deletable, updateable by ROLE_SUPERVISOR
+
+
+    h2#get_one GET /{id}
+    p Get a single billable time by its id.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p One billable time
+
+    hr
+
+    h2#findByProjectAndDateBetweenOrderByDateAsc GET /search/findByProjectAndDateBetweenOrderByDateAsc
+    p Find work times by ther project and the date between two given dates.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p List of billable times.
+    h4 Parameters
+    table.pure-table.pure-table-bordered
+        thead
+            tr
+                th name
+                th type
+                th required
+                th description
+        tbody
+            tr
+                td project
+                td Long
+                td true
+                td The id of the project
+            tr
+                td start
+                td Date
+                td true
+                td The start of the interval
+            tr
+                td end
+                td Date
+                td true
+                td The end of the interval
+
+    hr
+
+    h2#findByDateBetween GET /search/findByDateBetween
+    p Find all billable times between two dates.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_ADMIN
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p List of billable times.
+    h4 Parameters
+    table.pure-table.pure-table-bordered
+        thead
+            tr
+                th name
+                th type
+                th required
+                th description
+        tbody
+            tr
+                td start
+                td Date
+                td true
+                td The start of the interval
+            tr
+                td end
+                td Date
+                td true
+                td The end of the interval
+
+    hr
+
+    h2#findEmployeeMappingByProjectAndDateBetween GET /findEmployeeMappingByProjectAndDateBetween
+    p Get all billable minutes for one project and employee in an interval summed up.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p Map of String to Integer (employee full name -> summed up minutes)
+
+    h4 Parameters
+    table.pure-table.pure-table-bordered
+        thead
+            tr
+                th name
+                th type
+                th required
+                th description
+        tbody
+            tr
+                td project
+                td Long
+                td true
+                td The id of the project
+            tr
+                td start
+                td Date
+                td true
+                td The start of the interval
+            tr
+                td end
+                td Date
+                td true
+                td The end of the interval
+
+    hr
+
+    h2#post POST /
+    p Create a new billable time. Returns the created object.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p A single billable time.
+
+    hr
+
+    h2#put PUT /{id}
+    p Update the billable time identified by id. Returns the updated object.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p A single billable time.
+
+    hr
+
+    h2#delete DELETE /{id}
+    p Delete a the billable time identified by id.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_SUPERVISOR
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p Nothing.
