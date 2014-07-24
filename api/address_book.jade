@@ -1,5 +1,51 @@
 extends ../base/layout
 block vars
-    - var page = 'api/addressBook'
+    - var page = 'api/address_book'
 block content
     h1 /address_book
+    .pure-g
+        .pure-u-1.pure-u-lg-1-2
+            h2 Endpoints
+            ul
+                li
+                    a(href="#get_root") GET /
+        .pure-u-1.pure-u-lg-1-2
+            h2 Structure
+            table.pure-table.pure-table-bordered
+                thead
+                    tr
+                        th Fieldname
+                        th Fieldtype
+                        th Validations
+                tbody
+                    tr
+                        td firstName
+                        td String
+                        td not empty
+                    tr
+                        td lastName
+                        td String
+                        td not empty
+                    tr
+                        td phoneNumber
+                        td String
+                        td
+                    tr
+                        td title
+                        td String
+                        td
+                    tr
+                        td email
+                        td String
+                        td valid email
+    h2#get_root GET /
+    p Get the address book containing all employees except the admin.
+    .pure-g
+        .pure-u-1.pure-u-md-1-2
+            h4 Security
+            p ROLE_EMPLOYEE
+        .pure-u-1.pure-u-md-1-2
+            h4 Returns
+            p List of addressbook entries.
+    h4 Parameters
+    b <a href="api_overview.html#pageable">pageable</a>

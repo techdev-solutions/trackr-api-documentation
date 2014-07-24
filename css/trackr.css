@@ -40,3 +40,6 @@ header {
 #content {
   margin-left: 331px;
   min-height: 100%; }
+  @media screen and (max-width: 900px) {
+    #content header {
+      font-size: 10px; } }

@@ -3,3 +3,42 @@ block vars
     - var page = 'api/authorities'
 block content
     h1 /authorities
+    .pure-g
+    .pure-u-1.pure-u-lg-1-2
+        h2 Endpoints
+        ul
+            li
+                a(href="#get_root") GET /
+            li
+                a(href="#get_one") GET /{id}
+    .pure-u-1.pure-u-lg-1-2
+        h2 Structure
+        table.pure-table.pure-table-bordered
+            thead
+                tr
+                    th Fieldname
+                    th Fieldtype
+                    th Validations
+            tbody
+                tr
+                    td id
+                    td Long
+                    td
+                tr
+                    td authority
+                    td String
+                    td not empty
+                tr
+                    td order
+                    td int
+                    td minimum 0
+
+    h2#get_root GET /
+    p Get all authorities that are defined
+    h4 Returns
+    p List of authorities
+    hr
+    h2#get_one GET /{id}
+    p Get one authority by its id.
+    h4 Returns
+    p One authority
