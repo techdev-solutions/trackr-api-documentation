@@ -1,0 +1,26 @@
+{
+  "name": "trackr-api-documentation",
+  "version": "0.0.0",
+  "description": "API documentation for trackr",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techdev-solutions/trackr-api-documentation.git"
+  },
+  "keywords": [
+    "documentation",
+    "trackr"
+  ],
+  "author": "Moritz Schulze",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/techdev-solutions/trackr-api-documentation/issues"
+  },
+  "homepage": "https://github.com/techdev-solutions/trackr-api-documentation",
+  "dependencies": {
+    "jade": "^1.5.0"
+  }
+}

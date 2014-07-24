@@ -1,0 +1,99 @@
+extends ../base/layout
+block content
+    h1= '/' + endpointPath
+    p!= description
+    .pure-g
+        .pure-u-1.pure-u-lg-3-5
+            if(endpoints)
+                h2#endpoints Endpoints
+                table.pure-table.pure-table-bordered
+                    thead
+                        tr
+                            th Method
+                            th Path
+                    tbody
+                        each endpoint in endpoints
+                            tr
+                                td= endpoint.method
+                                td
+                                    a(href='#' + endpoint.method + endpoint.path)= endpoint.path
+            if(projections)
+                h2 Projections
+                table.pure-table
+                    thead
+                        tr
+                            th Name
+                            th Description
+                    tbody
+                        each projection in projections
+                            tr
+                                td= projection.name
+                                td= projection.description
+        .pure-u-1.pure-u-lg-2-5
+            h2 Structure
+            table.pure-table.pure-table-bordered
+                thead
+                    tr
+                        th Fieldname
+                        th Fieldtype
+                        th Validations
+                tbody
+                    each field in structure
+                        tr
+                            td= field.name
+                            td= field.type
+                            td= field.validations
+                    if(links)
+                        tr
+                            td
+                                a(href="api_overview.html#links") Links
+                            td(colspan=2) Security
+                        each link in links
+                            tr
+                                td
+                                    a(href=link.type + '.html')= link.name
+                                td(colspan=2)= link.security
+
+
+    each endpoint in endpoints
+        h2(id=endpoint.method + endpoint.path)= endpoint.method + ' ' + endpoint.path
+            a.back-to-top(href="#endpoints") &#9650;
+        p!= endpoint.description
+        if(endpoint.security && endpoint.returns)
+            .pure-g
+                .pure-u-1.pure-u-md-1-2
+                    h4 Security
+                    p= endpoint.security
+                .pure-u-1.pure-u-md-1-2
+                    h4 Returns
+                    p= endpoint.returns
+        else
+            if(endpoint.security)
+                h4 Security
+                p= endpoint.security
+            if(endpoint.returns)
+                h4 Returns
+                p= endpoint.returns
+        if(endpoint.parameters || endpoint.pageable)
+            h4 Parameters
+            if(endpoint.pageable)
+                b
+                    a(href="api_overview.html#pageable") pageable
+            if(endpoint.parameters && typeof(endpoint.parameters) === 'object')
+                table.pure-table.pure-table-bordered
+                    thead
+                        tr
+                            th name
+                            th type
+                            th required
+                            th description
+                    tbody
+                        each parameter in endpoint.parameters
+                            tr
+                                td= parameter.name
+                                td= parameter.type
+                                td= parameter.required
+                                td= parameter.description
+            if(endpoint.parameters && typeof(endpoint.parameters) === 'string')
+                div!= endpoint.parameters
+        hr

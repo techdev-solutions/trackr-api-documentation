@@ -3,7 +3,7 @@ header
 
 // set path to ../ for pages in a subfolder
 - var path = ''
-if(page && page.indexOf('api') === 0)
+if(page && page.indexOf('api/') === 0)
     - path = '../'
 
 .pure-menu.pure-menu-open
@@ -17,7 +17,7 @@ if(page && page.indexOf('api') === 0)
     ul
         li(class=page === 'scheduled_jobs' ? 'pure-menu-selected' : undefined)
             a(href=path + "scheduled_jobs.html") Scheduled jobs
-    a(href=path + "api/api_overview.html").pure-menu-heading API documentation
+    a(href=path + "api_overview.html").pure-menu-heading API documentation
 
     - var api = ['address_book', 'addresses', 'authorities', 'billable_times', 'companies', 'contact_persons', 'credentials', 'employees', 'federal_states', 'holidays', 'invoices', 'principal', 'projects', 'sick_days', 'translations', 'travel_expense_reports', 'travel_expenses', 'vacation_requests', 'work_times']
     ul

@@ -6,3 +6,6 @@ atlassian-ide-plugin.xml
 
 # OSX
 .DS_Store
+
+# node
+node_modules
