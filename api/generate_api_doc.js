@@ -851,7 +851,159 @@ var holidays = {
         }
     ]
 };
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays];
+var invoices = {
+    page: 'api/invoices',
+    endpointPath: 'invoices',
+    description: 'Invoices sent to companies. The invoice state is an enum with the possible values OUTSTANDING, OVERDUE or PAID.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get all invoices.',
+            returns: 'A page of invoices.',
+            pageable: true,
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single invoice by its id.',
+            returns: 'One invoice.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByInvoiceState',
+            description: 'Find invoices by their state.',
+            returns: 'A page of invoices.',
+            pageable: true,
+            security: 'ROLE_ADMIN',
+            parameters: [
+                {
+                    name: 'state',
+                    type: 'invoice state',
+                    required: true,
+                    description: 'The invoice state to search for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByIdentifierLikeIgnoreCaseAndInvoiceState',
+            description: 'Find invoices by their state and identifier.',
+            returns: 'A page of invoices.',
+            pageable: true,
+            security: 'ROLE_ADMIN',
+            parameters: [
+                {
+                    name: 'identifier',
+                    type: 'String',
+                    required: true,
+                    description: 'The identifier to search for. % is wildcard.'
+                },
+                {
+                    name: 'state',
+                    type: 'invoice state',
+                    required: true,
+                    description: 'The invoice state to search for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByCreationDateBetween',
+            description: 'Find invoices in an interval.',
+            returns: 'A list of invoices.',
+            security: 'ROLE_ADMIN',
+            parameters: [
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new invoice. Returns the created object. If the due date is in the past the state is set to OVERDUE.',
+            returns: 'A single invoice.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'POST',
+            path: '/{id}/markPaid',
+            description: 'Mark an invoice as paid.',
+            returns: '"Ok." if it succeeded.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the invoice identified by id. Returns the updated object. If the due date is in the past the state is set to OVERDUE.',
+            returns: 'An invoice.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete the invoice identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN'
+        }
+    ],
+    projections: [
+        {
+            name: 'withDebitor',
+            description: 'The debitor company is embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'identifier',
+            type: 'String',
+            validations: 'not empty, unique'
+        },
+        {
+            name: 'creationDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'invoiceTotal',
+            type: 'Number',
+            validations: '> 0'
+        },
+        {
+            name: 'dueDate',
+            type: 'Date'
+        },
+        {
+            name: 'invoiceState',
+            type: 'invoice state enum',
+            validations: 'not empty'
+        }
+    ],
+    links: [
+
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
