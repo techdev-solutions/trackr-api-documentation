@@ -707,7 +707,7 @@ var employees = {
         },
         {
             name: 'federalState',
-            type: '<a href="federal_states.html">federal state</a>'
+            type: '<a href="federalStates.html">federal state</a>'
         },
         {
             name: 'vacationEntitlement',
@@ -747,8 +747,31 @@ var employees = {
         }
     ]
 };
+var federalStates = {
+    page: 'api/federalStates',
+    endpointPath: 'federalStates',
+    description: 'Get all federal states in Germany.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get all federal states.',
+            returns: 'A list of federal states.'
+        }
+    ],
+    structure: [
+        {
+            name: 'name',
+            type: 'enum constant'
+        },
+        {
+            name: 'state',
+            type: 'String'
+        }
+    ]
+};
 
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees];
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
