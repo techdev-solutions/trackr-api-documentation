@@ -1164,7 +1164,122 @@ var projects = {
         }
     ]
 };
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects];
+var sickDays = {
+    page: 'api/sickDays',
+    endpointPath: 'sickDays',
+    description: '<a href="employees.html">Employees</a> can track when they are sick.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single sickDay by its id.',
+            returns: 'One sickDay.',
+            security: 'ROLE_ADMIN or owning employee.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByEmployee',
+            description: 'Find all sickDays for an employee.',
+            returns: 'A list of sickDays.',
+            security: 'Only the owning employee.',
+            parameters: [
+                {
+                    name: 'employee',
+                    type: 'Long',
+                    required: true,
+                    description: 'The employee to fetch the sickDays for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByStartDateBetweenOrEndDateBetween',
+            description: 'Find all sickDays that have the start date in a given interval or the end date in another given interval.',
+            returns: 'A list of sickDays.',
+            security: 'ROLE_ADMIN',
+            parameters: [
+                {
+                    name: 'startLower',
+                    type: 'Date',
+                    required: true,
+                    description: 'The lower bound for the start date interval.'
+                },
+                {
+                    name: 'startHigher',
+                    type: 'Date',
+                    required: true,
+                    description: 'The upper bound for the start date interval.'
+                },
+                {
+                    name: 'endLower',
+                    type: 'Date',
+                    required: true,
+                    description: 'The lower bound for the end date interval.'
+                },
+                {
+                    name: 'endHigher',
+                    type: 'Date',
+                    required: true,
+                    description: 'The upper bound for the end date interval.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new sickDay. Returns the created object. Sends an email to all ROLE_SUPERVISOR employees about the new sickDay.',
+            returns: 'A single sickDay.',
+            security: 'ROLE_ADMIN or owning employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the sickDay identified by id. Returns the updated object. Sends an email to all ROLE_SUPERVISOR employees about the updated sickDay.',
+            returns: 'A single sickDay.',
+            security: 'ROLE_ADMIN or owning employee.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete a the sickDay identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN'
+        }
+    ],
+    projections: [
+        {
+            name: 'withEmployee',
+            description: 'The employee is embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'startDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'endDate',
+            type: 'Date'
+        }
+    ],
+    links: [
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'No update or delete.'
+        }
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects, sickDays];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
