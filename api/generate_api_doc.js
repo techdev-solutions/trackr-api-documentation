@@ -69,7 +69,7 @@ var addresses = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the address identified by id.',
+            description: 'Delete the address identified by id.',
             returns: 'Nothing',
             security: 'ROLE_ADMIN'
         }
@@ -449,7 +449,7 @@ var companies = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the company identified by id.',
+            description: 'Delete the company identified by id.',
             security: 'ROLE_ADMIN',
             returns: 'Nothing.'
         }
@@ -828,7 +828,7 @@ var holidays = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the holiday identified by id.',
+            description: 'Delete the holiday identified by id.',
             returns: 'Nothing'
         }
     ],
@@ -1090,7 +1090,7 @@ var projects = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the project identified by id.',
+            description: 'Delete the project identified by id.',
             returns: 'Nothing',
             security: 'ROLE_ADMIN'
         }
@@ -1241,7 +1241,7 @@ var sickDays = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the sickDay identified by id.',
+            description: 'Delete the sickDay identified by id.',
             returns: 'Nothing',
             security: 'ROLE_ADMIN'
         }
@@ -1420,7 +1420,7 @@ var travelExpenseReports = {
         {
             method: 'DELETE',
             path: '/{id}',
-            description: 'Delete a the travelExpenseReport identified by id.',
+            description: 'Delete the travelExpenseReport identified by id.',
             returns: 'Nothing',
             security: 'ROLE_ADMIN or owner and status is PENDING or REJECTED.'
         }
@@ -1429,6 +1429,14 @@ var travelExpenseReports = {
         {
             name: 'overview',
             description: 'The employee, approver and expenses are embedded.'
+        },
+        {
+            name: 'withEmployeeAndExpenses',
+            description: 'The employee and expenses are embedded.'
+        },
+        {
+            name: 'withExpenses',
+            description: 'The expenses are embedded.'
         }
     ],
     structure: [
@@ -1471,8 +1479,89 @@ var travelExpenseReports = {
         }
     ]
 };
+var travelExpenses = {
+    page: 'api/travelExpenses',
+    endpointPath: 'travelExpenses',
+    description: 'Travel expenses are the elements of a travel expense report. A travel expense has a type like taxi, hotel and so on. They are not accessible themselves, only through their report.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/types',
+            description: 'Get all available travel expense types.',
+            returns: 'A list of all travel expense types.'
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new travel expense. Returns the created object.',
+            returns: 'A single travel expense.',
+            security: 'Only the owner of the report and if the report is PENDING or REJECTED.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the travel expense identified by id. Returns the updated object.',
+            returns: 'A single travel expense.',
+            security: 'Only the owner of the report and if the report is PENDING or REJECTED.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete a travel expense identified by id.',
+            returns: 'Nothing',
+            security: 'Only the owner of the report and if the report is PENDING or REJECTED.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'type',
+            type: 'travel expense type',
+            validations: 'not null'
+        },
+        {
+            name: 'cost',
+            type: 'Number',
+            validations: 'not null'
+        },
+        {
+            name: 'vat',
+            type: 'Number',
+            validations: 'not null'
+        },
+        {
+            name: 'fromDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'toDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'submissionDate',
+            type: 'Date',
+            validations: 'not null'
+        }
+    ],
+    links: [
+        {
+            name: 'report',
+            type: 'travelExpenseReports',
+            security: 'No update or delete.'
+        }
+    ]
+};
 var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
-    sickDays, translations, travelExpenseReports];
+    sickDays, translations, travelExpenseReports, travelExpenses];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
