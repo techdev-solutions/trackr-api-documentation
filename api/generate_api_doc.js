@@ -1663,8 +1663,187 @@ var vacationRequests = {
         }
     ]
 };
+var workTimes = {
+    page: 'api/workTimes',
+    endpointPath: 'workTimes',
+    description: 'Employees can track their working times on projects. Multiple working times per day are allowed. Supervisors can create billable times out of working times.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single workTime by its id.',
+            returns: 'One workTime.',
+            security: 'ROLE_SUPERVISOR or owning employee.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByEmployeeAndDateOrderByStartTimeAsc',
+            description: 'Find all working times for an employee and a given date.',
+            returns: 'A list of workTimes.',
+            security: 'ROLE_SUPERVISOR or owning employee.',
+            parameters: [
+                {
+                    name: 'employee',
+                    type: 'Long',
+                    required: true,
+                    description: 'The id of the employee to search for.'
+                },
+                {
+                    name: 'date',
+                    type: 'Date',
+                    required: true,
+                    description: 'The date to search for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByEmployeeAndDateBetweenOrderByDateAscStartTimeAsc',
+            description: 'Find all working times for an employee in a time interval.',
+            returns: 'A list of workTimes.',
+            security: 'ROLE_SUPERVISOR or owning employee.',
+            parameters: [
+                {
+                    name: 'employee',
+                    type: 'Long',
+                    required: true,
+                    description: 'The id of the employee to search for.'
+                },
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByProjectAndDateBetweenOrderByDateAscStartTimeAsc',
+            description: 'Find all working times for a project in a time interval.',
+            returns: 'A list of workTimes.',
+            security: 'ROLE_SUPERVISOR.',
+            parameters: [
+                {
+                    name: 'project',
+                    type: 'Long',
+                    required: true,
+                    description: 'The id of the project to search for.'
+                },
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByDateBetween',
+            description: 'Find all working times in a time interval.',
+            returns: 'A list of workTimes.',
+            security: 'ROLE_ADMIN.',
+            parameters: [
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new workTime. Returns the created object.',
+            returns: 'A single workTime.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the workTime identified by id. Returns the updated object.',
+            returns: 'A single workTime.',
+            security: 'ROLE_ADMIN or owning employee.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete the workTime identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN or owning employee.'
+        }
+    ],
+    projections: [
+        {
+            name: 'withProject',
+            description: 'The project is embedded.'
+        },
+        {
+            name: 'withEmployee',
+            description: 'The employee is embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'date',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'startTime',
+            type: 'Time'
+        },
+        {
+            name: 'endTime',
+            type: 'Time'
+        },
+        {
+            name: 'comment',
+            type: 'String'
+        }
+    ],
+    links: [
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'No update or delete.'
+        },
+        {
+            name: 'project',
+            type: 'projects',
+            security: 'Update by ROLE_ADMIN or owning employee, no delete.'
+        }
+    ]
+};
 var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
-    sickDays, translations, travelExpenseReports, travelExpenses, vacationRequests];
+    sickDays, translations, travelExpenseReports, travelExpenses, vacationRequests, workTimes];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
