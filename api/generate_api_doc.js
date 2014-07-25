@@ -1311,8 +1311,168 @@ var translations = {
         }
     ]
 };
+var travelExpenseReports = {
+    page: 'api/travelExpenseReports',
+    endpointPath: 'travelExpenseReports',
+    description: 'Employees can create travel expense reports for their travel expenses. A travel expense report has a travel expense report status that can be SUBMITTED, PENDING, APPROVED or REJECTED.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single travelExpenseReport by its id.',
+            returns: 'One travelExpenseReport.',
+            security: 'ROLE_SUPERVISOR or owning employee.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByEmployeeOrderByStatusAsc',
+            description: 'Get all travel expense reports for an employee.',
+            returns: 'List of travel expense reports.',
+            security: 'Owning employee.',
+            parameters: [
+                {
+                    name: 'employee',
+                    type: 'Long',
+                    required: true,
+                    description: 'The id of the employee to fetch the reports for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByStatusOrderByEmployee_LastNameAsc',
+            description: 'Find reports by their status.',
+            returns: 'A page of travel expense reports.',
+            pageable: true,
+            security: 'ROLE_SUPERVISOR',
+            parameters: [
+                {
+                    name: 'status',
+                    type: 'travel expense report status',
+                    required: true,
+                    description: 'The status to search for.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findBySubmissionDateBetween',
+            description: 'Find travel expense reports that have a submission date in an interval.',
+            returns: 'A list of travel expense reports.',
+            security: 'ROLE_ADMIN',
+            parameters: [
+                {
+                    name: 'start',
+                    type: 'Date',
+                    required: true,
+                    description: 'The start of the interval.'
+                },
+                {
+                    name: 'end',
+                    type: 'Date',
+                    required: true,
+                    description: 'The end of the interval.'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/{id}/pdf',
+            description: 'Get the report as a PDF file',
+            returns: 'A byte stream containgin the PDF, encoded in base 64.',
+            security: 'ROLE_SUPERVISOR'
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new travelExpenseReport. Returns the created object.',
+            returns: 'A single travelExpenseReport.',
+            security: 'Owning employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the travelExpenseReport identified by id. Returns the updated object.',
+            returns: 'A single travelExpenseReport.',
+            security: 'ROLE_SUPERVISOR'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/submit',
+            description: 'Submit a travel expense report so a supervisor can accept it (i.e. change the status to SUBMITTED). Will send a mail to all supervisors that a new travel expense report has been submitted.',
+            security: 'Owning employee.',
+            returns: 'Nothing'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/approve',
+            description: 'Approve a travel expense report. Sets the approval date and approver employee (to the logged in user) on the report.',
+            security: 'ROLE_SUPERVISOR but *not* the owning employee.',
+            returns: 'Nothing.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/reject',
+            description: 'Reject a travel expense report. Sets the approval date and approver employee (to the logged in user) on the report.',
+            security: 'ROLE_SUPERVISOR but *not* the owning employee.',
+            returns: 'Nothing.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete a the travelExpenseReport identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN or owner and status is PENDING or REJECTED.'
+        }
+    ],
+    projections: [
+        {
+            name: 'overview',
+            description: 'The employee, approver and expenses are embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'status',
+            type: 'travel expense report status'
+        },
+        {
+            name: 'submissionDate',
+            type: 'Date'
+        },
+        {
+            name: 'approvalDate',
+            type: 'Date'
+        }
+    ],
+    links: [
+        {
+            name: 'expenses',
+            type: 'travelExpenses',
+            security: 'delete and update by ROLE_SUPERVISOR or owning employee'
+        },
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'No update or delete'
+        },
+        {
+            name: 'approver',
+            type: 'employees',
+            security: 'No update or delete'
+        }
+    ]
+};
 var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
-    sickDays, translations];
+    sickDays, translations, travelExpenseReports];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
