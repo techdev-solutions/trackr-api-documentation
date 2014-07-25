@@ -1047,7 +1047,7 @@ var projects = {
             parameters: [
                 {
                     name: 'identifier',
-                    type:' String',
+                    type: ' String',
                     required: true,
                     description: 'The project identifier to search for./**/'
                 }
@@ -1279,7 +1279,40 @@ var sickDays = {
         }
     ]
 };
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects, sickDays];
+var translations = {
+    page: 'api/translations',
+    endpointPath: 'translations',
+    description: 'This are the translations for our AngularJS frontend.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get translations for the locale of the currently logged in user.',
+            returns: 'Translations JSON object.'
+        },
+        {
+            method: 'PUT',
+            path: '/',
+            description: 'Change the locale for the currently logged in user. Also updates her/his credential object.',
+            parameters: [
+                {
+                    name: 'locale',
+                    type: 'String',
+                    required: true,
+                    description: 'The locale to use. Currently only en or de.'
+                }
+            ],
+            returns: '"Ok."'
+        }
+    ],
+    structure: [
+        {
+            name: 'JSON object containing translations.'
+        }
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
+    sickDays, translations];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
