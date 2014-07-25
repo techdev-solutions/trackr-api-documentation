@@ -1003,7 +1003,25 @@ var invoices = {
 
     ]
 };
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices];
+var principal = {
+    page: 'api/principal',
+    endpointPath: 'principal',
+    description: 'This is not an own entity but returns the <a href="credentials.html">credential</a> entity for the currently logged in user.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            returns: 'A credential.',
+            description: 'Get the credential entity for the logged in user.'
+        }
+    ],
+    structure: [
+        {
+            name: 'See credential'
+        }
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
