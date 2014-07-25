@@ -48,3 +48,6 @@ header {
   text-decoration: none;
   color: #71b1a2;
   float: right; }
+
+.long-endpoint {
+  font-size: 0.8em; }

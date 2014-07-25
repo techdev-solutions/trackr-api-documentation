@@ -1021,7 +1021,150 @@ var principal = {
         }
     ]
 };
-var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal];
+var projects = {
+    page: 'api/projects',
+    endpointPath: 'projects',
+    description: 'Projects belong to companies and employees can work on them.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/',
+            description: 'Get all projects.',
+            returns: 'A page of projects.',
+            pageable: true
+        },
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single project by its id.',
+            returns: 'One project.'
+        },
+        {
+            method: 'GET',
+            path: '/search/findByIdentifier',
+            description: 'Find projects by their identifier.',
+            returns: 'A list of projects',
+            parameters: [
+                {
+                    name: 'identifier',
+                    type:' String',
+                    required: true,
+                    description: 'The project identifier to search for./**/'
+                }
+            ]
+        },
+        {
+            method: 'GET',
+            path: '/search/findByNameLikeIgnoreCaseOrIdentifierLikeIgnoreCaseOrderByNameAsc',
+            description: 'Search by name or identifier, ignoring their case with wildcards.',
+            returns: 'A list of projects.',
+            parameters: [
+                {
+                    name: 'name',
+                    type: 'String',
+                    required: true,
+                    description: 'The name to search for. Wildcard is %.'
+                },
+                {
+                    name: 'identifier',
+                    type: 'String',
+                    required: true,
+                    description: 'The identifier to search for. Wildcard is %.'
+                }
+            ]
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new project. Returns the created object.',
+            returns: 'A single project.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the project identified by id. Returns the updated object.',
+            returns: 'A single project.',
+            security: 'ROLE_ADMIN'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete a the project identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_ADMIN'
+        }
+    ],
+    projections: [
+        {
+            name: 'withCompanyAndDebitor',
+            description: 'The company and debitor of the project are embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'identifier',
+            type: 'String',
+            validations: 'not empty, unique'
+        },
+        {
+            name: 'name',
+            type: 'String',
+            validations: 'not empty'
+        },
+        {
+            name: 'volume',
+            type: 'Integer',
+            validations: '> 0'
+        },
+        {
+            name: 'hourlyRate',
+            type: 'Number',
+            validations: '> 0'
+        },
+        {
+            name: 'dailyRate',
+            type: 'Number',
+            validations: '> 0'
+        },
+        {
+            name: 'fixedPrice',
+            type: 'Number',
+            validations: '> 0'
+        }
+    ],
+    links: [
+        {
+            name: 'company',
+            type: 'companies',
+            security: 'delete and update by ROLE_ADMIN'
+        },
+        {
+            name: 'debitor',
+            type: 'companies',
+            security: 'delete and update by ROLE_ADMIN'
+        },
+        {
+            name: 'workTimes',
+            type: 'workTimes',
+            security: 'delete and update by ROLE_ADMIN'
+        },
+        {
+            name: 'billableTimes',
+            type: 'billableTimes',
+            security: 'delete and update by ROLE_ADMIN'
+        }
+    ]
+};
+var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];

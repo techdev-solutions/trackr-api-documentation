@@ -16,7 +16,7 @@ block content
                             tr
                                 td= endpoint.method
                                 td
-                                    a(href='#' + endpoint.method + endpoint.path)= endpoint.path
+                                    a(href='#' + endpoint.method + endpoint.path, class=endpoint.path.length > 60 ? 'long-endpoint' : undefined)= endpoint.path
             if(projections)
                 h2 Projections
                 table.pure-table
