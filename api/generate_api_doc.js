@@ -1560,8 +1560,111 @@ var travelExpenses = {
         }
     ]
 };
+var vacationRequests = {
+    page: 'api/vacationRequests',
+    endpointPath: 'vacationRequests',
+    description: 'Employees can issue vacation requests that can be approved by a supervisor. A vacation request has a status, APPROVED, PENDING or REJECTED.',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/{id}',
+            description: 'Get a single vacation request by its id.',
+            returns: 'One vacation request.',
+            security: 'ROLE_SUPERVISOR or owning employee.'
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new vacation request. Returns the created object.<p>This will also do the following: Calculate the property numberOfDays (you don\'t have to provide it) by excluding holidays and weekends from the time interval. It will send a mail to all supervisors that a new vacation request has been filed.</p>',
+            returns: 'A single vacation request.',
+            security: 'ROLE_SUPERVISOR or owning employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}',
+            description: 'Update the vacation request identified by id. Returns the updated object.',
+            returns: 'A single vacation request.',
+            security: 'ROLE_SUPERVISOR but not owning employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/approve',
+            description: 'Approve a vacation request. Sends a mail to the owning employee. Sets the approver and approvalDate.',
+            returns: 'Nothing.',
+            security: 'ROLE_SUPERVISOR but not the owning employee.'
+        },
+        {
+            method: 'PUT',
+            path: '/{id}/reject',
+            description: 'Reject a vacation request. Sends a mail to the owning employee. Sets the approver and approvalDate.',
+            returns: 'Nothing.',
+            security: 'ROLE_SUPERVISOR but not the owning employee.'
+        },
+        {
+            method: 'DELETE',
+            path: '/{id}',
+            description: 'Delete the vacation request identified by id.',
+            returns: 'Nothing',
+            security: 'ROLE_SUPERVISOR or owning employee and status is PENDING.'
+        }
+    ],
+    projections: [
+        {
+            name: 'withEmployeeAndApprover',
+            description: 'The employee and approver are embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'version',
+            type: 'Integer'
+        },
+        {
+            name: 'startDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'endDate',
+            type: 'Date',
+            validations: 'not null'
+        },
+        {
+            name: 'numberOfDays',
+            type: 'Integer'
+        },
+        {
+            name: 'status',
+            type: 'vacation request status'
+        },
+        {
+            name: 'approvalDate',
+            type: 'Date'
+        },
+        {
+            name: 'submissionTime',
+            type: 'Date'
+        }
+    ],
+    links: [
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'No update or delete.'
+        },
+        {
+            name: 'approver',
+            type: 'employees',
+            security: 'No update or delete.'
+        }
+    ]
+};
 var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
-    sickDays, translations, travelExpenseReports, travelExpenses];
+    sickDays, translations, travelExpenseReports, travelExpenses, vacationRequests];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
