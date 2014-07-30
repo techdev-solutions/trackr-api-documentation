@@ -1476,6 +1476,64 @@ var travelExpenseReports = {
             name: 'approver',
             type: 'employees',
             security: 'No update or delete'
+        },
+        {
+            name: 'comments',
+            type: 'travelExpenseReportComments'
+        }
+    ]
+};
+var travelExpenseReportComments = {
+    page: 'api/travelExpenseReportComments',
+    endpointPath: 'travelExpenseReportComments',
+    endpoints: [
+        {
+            method: 'GET',
+            path: '/search/findByTravelExpenseReportOrderBySubmissionDateAsc',
+            description: 'Find all comments for one travel expense report.',
+            security: 'ROLE_SUPERVISOR or owner of the report.',
+            returns: 'A list of comments.'
+        },
+        {
+            method: 'POST',
+            path: '/',
+            description: 'Create a new comment. Returns the created object.',
+            returns: 'A single comment.',
+            security: 'ROLE_SUPERVISOR or owner of the report.'
+        }
+    ],
+    projections: [
+        {
+            name: 'withEmployee',
+            description: 'The employee is embedded.'
+        }
+    ],
+    structure: [
+        {
+            name: 'id',
+            type: 'Long'
+        },
+        {
+            name: 'text',
+            type: 'String',
+            validations: 'Not empty'
+        },
+        {
+            name: 'submissionDate',
+            type: 'Date',
+            validations: 'Not null'
+        }
+    ],
+    links: [
+        {
+            name: 'travelExpenseReport',
+            type: 'travelExpenseReports',
+            security: 'No update or delete.'
+        },
+        {
+            name: 'employee',
+            type: 'employees',
+            security: 'No update or delete.'
         }
     ]
 };
@@ -1847,7 +1905,7 @@ var workTimes = {
     ]
 };
 var api = [address_book, addresses, authorities, billableTimes, contactPersons, companies, credentials, employees, federalStates, holidays, invoices, principal, projects,
-    sickDays, translations, travelExpenseReports, travelExpenses, vacationRequests, workTimes];
+    sickDays, translations, travelExpenseReports, travelExpenseReportComments, travelExpenses, vacationRequests, workTimes];
 
 for (var i = 0; i < api.length; i++) {
     var apiElement = api[i];
