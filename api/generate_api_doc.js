@@ -374,7 +374,7 @@ var contactPersons = {
         {
             name: 'company',
             type: 'companies',
-            security: 'deletable, updateable by ROLE_SUPERVISOR'
+            security: 'updateable by ROLE_SUPERVISOR, not deletable.'
         }
     ]
 };
