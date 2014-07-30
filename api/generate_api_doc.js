@@ -1819,7 +1819,8 @@ var workTimes = {
             method: 'POST',
             path: '/',
             description: 'Create a new workTime. Returns the created object.',
-            returns: 'A single workTime.'
+            returns: 'A single workTime.',
+            security: 'Only the proposed owner of the workTime.'
         },
         {
             method: 'PUT',
