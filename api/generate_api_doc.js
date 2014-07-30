@@ -812,24 +812,6 @@ var holidays = {
                     description: 'The end of the interval.'
                 }
             ]
-        },
-        {
-            method: 'POST',
-            path: '/',
-            description: 'Create a new holiday. Returns the created object.',
-            returns: 'A single holiday.'
-        },
-        {
-            method: 'PUT',
-            path: '/{id}',
-            description: 'Update the holiday identified by id. Returns the updated object.',
-            returns: 'A single holiday.'
-        },
-        {
-            method: 'DELETE',
-            path: '/{id}',
-            description: 'Delete the holiday identified by id.',
-            returns: 'Nothing'
         }
     ],
     structure: [
