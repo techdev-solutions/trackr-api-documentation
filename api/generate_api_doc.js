@@ -1621,7 +1621,7 @@ var vacationRequests = {
             path: '/',
             description: 'Create a new vacation request. Returns the created object.<p>This will also do the following: Calculate the property numberOfDays (you don\'t have to provide it) by excluding holidays and weekends from the time interval. It will send a mail to all supervisors that a new vacation request has been filed.</p>',
             returns: 'A single vacation request.',
-            security: 'ROLE_SUPERVISOR or owning employee.'
+            security: 'ROLE_ADMIN or owning employee.'
         },
         {
             method: 'PUT',
