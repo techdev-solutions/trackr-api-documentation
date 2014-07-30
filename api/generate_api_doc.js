@@ -1547,6 +1547,10 @@ var travelExpenses = {
             validations: 'not null'
         },
         {
+            name: 'comment',
+            type: 'String'
+        },
+        {
             name: 'submissionDate',
             type: 'Date',
             validations: 'not null'
