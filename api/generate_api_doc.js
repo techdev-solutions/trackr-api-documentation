@@ -478,8 +478,11 @@ var companies = {
             name: 'name',
             type: 'String',
             validation: 'not empty'
+        },
+        {
+            name: 'timeForPayment',
+            type: 'Integer'
         }
-
     ],
     links: [
         {
@@ -915,7 +918,7 @@ var invoices = {
         {
             method: 'POST',
             path: '/',
-            description: 'Create a new invoice. Returns the created object. If the due date is in the past the state is set to OVERDUE.',
+            description: 'Create a new invoice. Returns the created object. If the due date is in the past the state is set to OVERDUE. If the debitor has a timeForPayment and the due date is not set it is calculated from that.',
             returns: 'A single invoice.',
             security: 'ROLE_ADMIN'
         },
@@ -929,7 +932,7 @@ var invoices = {
         {
             method: 'PUT',
             path: '/{id}',
-            description: 'Update the invoice identified by id. Returns the updated object. If the due date is in the past the state is set to OVERDUE.',
+            description: 'Update the invoice identified by id. Returns the updated object. If the due date is in the past the state is set to OVERDUE. If the debitor has a timeForPayment and the due date is not set it is calculated from that.',
             returns: 'An invoice.',
             security: 'ROLE_ADMIN'
         },
