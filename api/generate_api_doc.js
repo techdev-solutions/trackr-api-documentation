@@ -1422,6 +1422,10 @@ var travelExpenseReports = {
         {
             name: 'withExpenses',
             description: 'The expenses are embedded.'
+        },
+        {
+            name: 'withExpensesAndDebitor',
+            description: 'Expenses and debitor embedded.'
         }
     ],
     structure: [
